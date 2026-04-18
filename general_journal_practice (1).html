@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>General journal practice</title>
+  <style>
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #f5f7fb;
+  color: #111827;
+}
+h1, h2, h3 {
+  color: #000f46;
+}
+#quizset-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 12px 32px 12px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d3d8e5;
+  box-shadow: 0 10px 18px rgba(15,23,42,0.05);
+}
+.qs-title {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+}
+.qs-title span.icon {
+  font-size: 22px;
+}
+.qs-intro {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.qs-grid {
+  display: grid;
+  gap: 12px;
+}
+.qs-card {
+  border-radius: 10px;
+  border: 1px solid #d3d8e5;
+  background-color: #f9fafb;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+.qs-question-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.qs-prompt {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.options-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.option-pill {
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 13px;
+  border: 1px solid #cbd5e1;
+  background-color: #e5edff;
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+}
+.option-pill.selected {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 1px rgba(79,70,229,0.25);
+}
+.option-pill.correct {
+  background-color: #dcfce7;
+  border-color: #22c55e;
+}
+.option-pill.incorrect {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+}
+.qs-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 8px;
+  margin-top: 6px;
+}
+.w-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  background-color: #e5edff;
+  color: #111827;
+}
+.w-btn.secondary {
+  background-color: #ffffff;
+  color: #111827;
+  border-color: #cbd5e1;
+}
+.w-btn span.icon {
+  font-size: 13px;
+}
+.qs-status {
+  margin-top: 2px;
+}
+.qs-result {
+  font-size: 12px;
+  color: #111827;
+}
+.qs-feedback {
+  font-size: 11px;
+  color: #4b5563;
+}
+@media (max-width: 768px) {
+  #quizset-wrapper {
+    padding: 12px 10px 26px 10px;
+  }
+}
+
+
+  .gj-table{
+    width:100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 520px;
+  }
+  .gj-table th{
+    text-align:left;
+    font-size:12px;
+    color:#374151;
+    background:#f3f6fb;
+    padding:10px 10px;
+    border-top:1px solid #d3d8e5;
+    border-bottom:1px solid #d3d8e5;
+  }
+  .gj-table th:first-child{ border-left:1px solid #d3d8e5; border-top-left-radius:10px; }
+  .gj-table th:last-child{ border-right:1px solid #d3d8e5; border-top-right-radius:10px; }
+  .gj-table td{
+    padding:10px 10px;
+    border-bottom:1px solid #e5e7eb;
+    background:#ffffff;
+    font-size:13px;
+  }
+  .gj-table td:first-child{ border-left:1px solid #d3d8e5; }
+  .gj-table td:last-child{ border-right:1px solid #d3d8e5; }
+  .gj-row:last-child td:first-child{ border-bottom-left-radius:10px; }
+  .gj-row:last-child td:last-child{ border-bottom-right-radius:10px; }
+  .gj-select, .gj-input{
+    width:100%;
+    box-sizing:border-box;
+    border:1px solid #d3d8e5;
+    border-radius:999px;
+    padding:8px 10px;
+    font-size:13px;
+    background:#ffffff;
+    outline:none;
+  }
+  .gj-input{ text-align:right; }
+  .gj-cell-ok{ border-color:#22c55e !important; background: rgba(34,197,94,0.08) !important; }
+  .gj-cell-bad{ border-color:#ef4444 !important; background: rgba(239,68,68,0.08) !important; }
+  
+  </style>
+</head>
+<body>
+<div id='quizset-wrapper'>  <h2 class='qs-title'><span class='icon'>🧠</span><span>Question set</span></h2>  <p class='qs-intro'>Work through each transaction and check your answers.</p>  <div class='qs-grid' style='grid-template-columns: repeat(1, minmax(0, 1fr));'><div class='qs-card' id='gjq1' data-qid='gjq1'>  <div class='qs-question-label'>QUESTION 1    <span id='gjq1-tick' style='margin-left:8px; font-weight:800; color:#16a34a; display:none;'>✓</span>  </div>  <div class='qs-prompt'>    <div style='font-weight:700; margin-bottom:6px;'>What is the journal entry for this settlement discount?</div>    <div></div>  </div>  <div style='margin-top:10px;'>    <div style='overflow-x:auto;'>      <table class='gj-table'>        <thead><tr><th>Account</th><th style='text-align:right;'>Dr ($)</th><th style='text-align:right;'>Cr ($)</th></tr></thead>        <tbody id='gjq1-rows'></tbody>      </table>    </div>  </div>  <div class='qs-controls'>    <button class='w-btn' type='button' onclick="gjCheck('gjq1')"><span class='icon'>✅</span><span>Check</span></button>    <button class='w-btn secondary' type='button' onclick="gjReset('gjq1')"><span class='icon'>🔁</span><span>Reset</span></button>  </div>  <div class='qs-status'>    <div id='gjq1-result' class='qs-result'>Fill in the journal entry, then click Check.</div>    <div id='gjq1-feedback' class='qs-feedback'></div>  </div></div>  </div>  <div class='qs-intro' style='margin-top:14px; font-weight:700;'>    Correct transactions: <span id='gj-correct-count'>0</span> / 1  </div></div><script>
+
+(function(){
+  const GJ_KEY = {"accounts":["Accounts Payable","Discount Received"],"txns":[{"label":"What is the journal entry for this settlement discount?","narrative":"","lines":[{"side":"Dr","account":"Accounts Payable","amount":112},{"side":"Cr","account":"Discount Received","amount":112}]}]};
+  const state = { done: {} };
+
+  function moneyToNum(x){
+    if (x === null || x === undefined) return NaN;
+    let s = String(x);
+    s = s.replaceAll('$','').replaceAll(',','').replaceAll(' ','');
+    if (!s.length) return NaN;
+    const n = Number(s);
+    return Number.isFinite(n) ? n : NaN;
+  }
+
+  function renderAll(){
+    GJ_KEY.txns.forEach((t, idx) => {
+      const qid = 'gjq' + (idx+1);
+      const tbody = document.getElementById(qid + '-rows');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      const opts = [''].concat(GJ_KEY.accounts || []);
+      const optHtml = opts.map(a => '<option value="' + String(a).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') + '">' + String(a).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') + '</option>').join('');
+      t.lines.forEach((ln, j) => {
+        const tr = document.createElement('tr');
+        tr.className = 'gj-row';
+        tr.setAttribute('data-line', String(j));
+        tr.innerHTML =
+          '<td><select class="gj-select" data-part="acc">' + optHtml + '</select></td>' +
+          '<td><input class="gj-input" data-part="dr" inputmode="decimal" placeholder="0.00" /></td>' +
+          '<td><input class="gj-input" data-part="cr" inputmode="decimal" placeholder="0.00" /></td>';
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  function setTick(qid, on){
+    const tick = document.getElementById(qid + '-tick');
+    if (tick) tick.style.display = on ? 'inline' : 'none';
+  }
+
+  function updateTally(){
+    const total = GJ_KEY.txns.length;
+    const correct = Object.values(state.done).filter(Boolean).length;
+    const el = document.getElementById('gj-correct-count');
+    if (el) el.textContent = String(correct);
+  }
+
+  window.gjReset = function(qid){
+    const card = document.getElementById(qid);
+    if (!card) return;
+    card.querySelectorAll('.gj-select').forEach(s => { s.value = ''; s.classList.remove('gj-cell-ok','gj-cell-bad'); });
+    card.querySelectorAll('.gj-input').forEach(i => { i.value = ''; i.classList.remove('gj-cell-ok','gj-cell-bad'); });
+
+    const res = document.getElementById(qid + '-result');
+    const fb  = document.getElementById(qid + '-feedback');
+    if (res) res.textContent = 'Fill in the journal entry, then click Check.';
+    if (fb)  fb.textContent  = '';
+
+    state.done[qid] = false;
+    setTick(qid, false);
+    updateTally();
+  };
+
+  window.gjCheck = function(qid){
+    const idx = Number(qid.replace('gjq','')) - 1;
+    const t = GJ_KEY.txns[idx];
+    const card = document.getElementById(qid);
+    if (!t || !card) return;
+
+    let okAll = true;
+
+    const rows = Array.from(card.querySelectorAll('tr.gj-row'));
+    rows.forEach((tr, j) => {
+      const ln = t.lines[j];
+      const sel = tr.querySelector('[data-part="acc"]');
+      const dr  = tr.querySelector('[data-part="dr"]');
+      const cr  = tr.querySelector('[data-part="cr"]');
+
+      // clear prior marks
+      [sel,dr,cr].forEach(el => el.classList.remove('gj-cell-ok','gj-cell-bad'));
+
+      const acc = (sel && sel.value) ? String(sel.value) : '';
+      const drn = moneyToNum(dr ? dr.value : '');
+      const crn = moneyToNum(cr ? cr.value : '');
+
+      const wantAcc = String(ln.account || '');
+      const wantAmt = Number(ln.amount);
+      const wantSide = String(ln.side || '');
+
+      let rowOk = true;
+
+      if (acc !== wantAcc) rowOk = false;
+
+      const tol = 0.005;
+
+      if (wantSide === 'Dr'){
+        if (!(Number.isFinite(drn) && Math.abs(drn - wantAmt) <= tol)) rowOk = false;
+        if (Number.isFinite(crn) && Math.abs(crn) > tol) rowOk = false;
+      } else if (wantSide === 'Cr'){
+        if (!(Number.isFinite(crn) && Math.abs(crn - wantAmt) <= tol)) rowOk = false;
+        if (Number.isFinite(drn) && Math.abs(drn) > tol) rowOk = false;
+      } else {
+        rowOk = false;
+      }
+
+      if (rowOk){
+        [sel,dr,cr].forEach(el => el.classList.add('gj-cell-ok'));
+      } else {
+        okAll = false;
+        // mark likely issue fields
+        if (acc !== wantAcc) sel.classList.add('gj-cell-bad');
+        if (wantSide === 'Dr') {
+          if (!(Number.isFinite(drn) && Math.abs(drn - wantAmt) <= tol)) dr.classList.add('gj-cell-bad');
+          if (Number.isFinite(crn) && Math.abs(crn) > tol) cr.classList.add('gj-cell-bad');
+        }
+        if (wantSide === 'Cr') {
+          if (!(Number.isFinite(crn) && Math.abs(crn - wantAmt) <= tol)) cr.classList.add('gj-cell-bad');
+          if (Number.isFinite(drn) && Math.abs(drn) > tol) dr.classList.add('gj-cell-bad');
+        }
+      }
+    });
+
+    const res = document.getElementById(qid + '-result');
+    const fb  = document.getElementById(qid + '-feedback');
+
+    if (okAll){
+      state.done[qid] = true;
+      setTick(qid, true);
+      if (res) res.textContent = 'Correct!';
+      if (fb)  fb.textContent = 'Nice work – that journal entry is correct. 🎉';
+    } else {
+      state.done[qid] = false;
+      setTick(qid, false);
+      if (res) res.textContent = 'Not quite.';
+      if (fb)  fb.textContent = 'Check the highlighted cells and try again.';
+    }
+
+    updateTally();
+  };
+
+  // init
+  renderAll();
+  updateTally();
+})();
+
+</script>
+</body>
+</html>
+
